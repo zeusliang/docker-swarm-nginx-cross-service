@@ -1,0 +1,1 @@
+docker service update --mount-add type=bind,source=/root/devel-nginx/proxy,destination=/etc/nginx/conf.d proxy

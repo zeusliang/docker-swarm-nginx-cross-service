@@ -1,0 +1,19 @@
+proxy:
+docker service create \
+--name=proxy \
+--network=nginx-nets \
+--publish published=80,target=80 \
+--mount type=bind,source=$PWD/conf.d,destination=/etc/nginx/conf.d \
+--replicas=3 \
+myregistrydomain.com:5000/nginx:proxy
+
+
+a-ng:
+docker service create \
+--name=a-ng \
+--network=nginx-nets \
+--publish published=8080,target=8080 \
+--mount type=bind,source=$PWD/www,destination=/usr/share/nginx/html \
+--mount type=bind,source=$PWD/conf.d,destination=/etc/nginx/conf.d \
+--replicas=3 \
+myregistrydomain.com:5000/nginx:2
